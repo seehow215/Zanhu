@@ -11,6 +11,7 @@ django-taggit = "*"
 python-slugify = "*"
 django-markdownx = "*"
 django-contrib-comments = "*"
+channels = "*"
 
 [requires]
 python_version = "3.6"

@@ -50,8 +50,6 @@ DATABASES["default"]["ATOMIC_REQUESTS"] = True  # encapsulate database operation
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "config.urls"
-# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
-WSGI_APPLICATION = "config.wsgi.application"
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -66,6 +64,7 @@ DJANGO_APPS = [
     "django.forms",  # used to overwrite django internal widget template
 ]
 THIRD_PARTY_APPS = [
+    "channels",
     "crispy_forms",
     "allauth",
     "allauth.account",
@@ -83,12 +82,10 @@ LOCAL_APPS = [
     "zanhu.news.apps.NewsConfig",
     "zanhu.articles.apps.ArticlesConfig",
     "zanhu.qa.apps.QaConfig",
+    "zanhu.messager.apps.MessagerConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-# change the sequence of template searching, customized template -> system default template
-FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -303,4 +300,14 @@ STATICFILES_FINDERS += ["compressor.finders.CompressorFinder"]
 # Your stuff...
 # ------------------------------------------------------------------------------
 
-MARKDOWNX_SERVER_CALL_LATENCY = 2000
+# ASGI server setup
+ASGI_APPLICATION = 'config.routing.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [f'{env("REDIS_URL", default="redis://127.0.0.1:6379")}/3',],  # channel layers redis cache
+        },
+    },
+}
