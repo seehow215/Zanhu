@@ -44,7 +44,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 DATABASES = {
     "default": env.db("DATABASE_URL", default="postgres:///zanhu")
 }
-DATABASES["default"]["ATOMIC_REQUESTS"] = True # encapsulate database operations in http request as transactions
+DATABASES["default"]["ATOMIC_REQUESTS"] = True  # encapsulate database operations in http request as transactions
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -62,8 +62,8 @@ DJANGO_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.humanize", # Handy template tags
-    "django.forms", # used to overwrite django internal widget template
+    "django.contrib.humanize",  # Handy template tags
+    "django.forms",  # used to overwrite django internal widget template
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
@@ -82,6 +82,7 @@ LOCAL_APPS = [
     "zanhu.users.apps.UsersConfig",
     "zanhu.news.apps.NewsConfig",
     "zanhu.articles.apps.ArticlesConfig",
+    "zanhu.qa.apps.QaConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -244,7 +245,7 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "
-            "%(process)d %(thread)d %(message)s"
+                      "%(process)d %(thread)d %(message)s"
         }
     },
     "handlers": {
@@ -267,28 +268,28 @@ CELERY_BROKER_URL = env("CELERY_BROKER_URL")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_backend
 CELERY_RESULT_BACKEND = env("CELERY_RESULT_BACKEND")
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-accept_content
-CELERY_ACCEPT_CONTENT = ["json", "msgpack"] # indicate accepted content type
+CELERY_ACCEPT_CONTENT = ["json", "msgpack"]  # indicate accepted content type
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-task_serializer
-CELERY_TASK_SERIALIZER = "msgpack" # msgpack is a binary json serializing scheme, which is faster and smaller than json
+CELERY_TASK_SERIALIZER = "msgpack"  # msgpack is a binary json serializing scheme, which is faster and smaller than json
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-result_serializer
-CELERY_RESULT_SERIALIZER = "json" # reading result does not require high performance, so we use json for better readability
+CELERY_RESULT_SERIALIZER = "json"  # reading result does not require high performance, so we use json for better readability
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-time-limit
 # TODO: set to whatever value is adequate in your circumstances
-CELERY_TASK_TIME_LIMIT = 5 * 60 # maximum running time for single task
+CELERY_TASK_TIME_LIMIT = 5 * 60  # maximum running time for single task
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
 # TODO: set to whatever value is adequate in your circumstances
-CELERY_TASK_SOFT_TIME_LIMIT = 60 # when this is exceeded, SoftTimeLimitExceeded will be raised
+CELERY_TASK_SOFT_TIME_LIMIT = 60  # when this is exceeded, SoftTimeLimitExceeded will be raised
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 # django-allauth
 # ------------------------------------------------------------------------------
 ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_AUTHENTICATION_METHOD = "username" # email/username_email; allow multiple auth method
+ACCOUNT_AUTHENTICATION_METHOD = "username"  # email/username_email; allow multiple auth method
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory" # none, optional
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # none, optional
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_ADAPTER = "zanhu.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html

@@ -22,8 +22,7 @@ class ArticleQuerySet(models.query.QuerySet):
 
     def get_counted_tags(self):
         tag_dict = {}
-        query = self.get_published().annotate(tagged=models.Count('tags')).filter(tags__gt=0)
-        for obj in query:
+        for obj in self.all():
             for tag in obj.tags.names():
                 if tag not in tag_dict:
                     tag_dict[tag] = 1
