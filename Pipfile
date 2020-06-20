@@ -12,6 +12,9 @@ python-slugify = "*"
 django-markdownx = "*"
 django-contrib-comments = "*"
 channels = "*"
+django-haystack = "*"
+elasticsearch = "==2.4.1"
+django-celery-email = "*"
 
 [requires]
 python_version = "3.6"

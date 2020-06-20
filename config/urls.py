@@ -10,19 +10,20 @@ urlpatterns = [
         "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
     ),
     # User management
-    path("users/", include("users.urls", namespace="users")),
+    path("users/", include("zanhu.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
 
     # Third-party apps
     path('markdownx/', include('markdownx.urls')),
     path('comments/', include('django_comments.urls')),
+    path('search/', include('haystack.urls')),
 
     #  开发的应用
-    path('news/', include('news.urls', namespace='news')),
-    path('articles/', include('articles.urls', namespace='articles')),
-    path('qa/', include('qa.urls', namespace='qa')),
-    path('messager/', include('messager.urls', namespace='messager')),
-    path('notifications/', include('notifications.urls', namespace='notifications')),
+    path('news/', include('zanhu.news.urls', namespace='news')),
+    path('articles/', include('zanhu.articles.urls', namespace='articles')),
+    path('qa/', include('zanhu.qa.urls', namespace='qa')),
+    path('messager/', include('zanhu.messager.urls', namespace='messager')),
+    path('notifications/', include('zanhu.notifications.urls', namespace='notifications')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

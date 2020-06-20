@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 from django.views.generic import ListView, DeleteView
 
-from helpers import ajax_required, AuthorRequiredMixin
+from zanhu.helpers import ajax_required, AuthorRequiredMixin
 from zanhu.news.models import News
 
 
@@ -16,7 +16,7 @@ class NewsListView(LoginRequiredMixin, ListView):
     template_name = 'news/news_list.html'
 
     def get_queryset(self):
-        return News.objects.filter(reply=False)
+        return News.objects.filter(reply=False).select_related('user', 'parent').prefetch_related('liked')
 
 
 class NewsDeleteView(LoginRequiredMixin, AuthorRequiredMixin, DeleteView):

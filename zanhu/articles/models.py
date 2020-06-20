@@ -14,11 +14,11 @@ class ArticleQuerySet(models.query.QuerySet):
     """Customized QuerySet which improves the usability of model class"""
     def get_published(self):
         """return published article"""
-        return self.filter(status="P")
+        return self.filter(status="P").select_related('user')
 
     def get_drafts(self):
         """return drafts"""
-        return self.filter(status="D")
+        return self.filter(status="D").select_related('user')
 
     def get_counted_tags(self):
         tag_dict = {}

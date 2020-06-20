@@ -34,6 +34,7 @@ class DraftsListView(ArticlesListView):
         return Article.objects.filter(user=self.request.user).get_drafts()
 
 
+@method_decorator(cache_page(60 * 60), name='get')
 class CreateArticleView(LoginRequiredMixin, CreateView):
     """create article"""
     model = Article
