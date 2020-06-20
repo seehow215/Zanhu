@@ -83,6 +83,8 @@ LOCAL_APPS = [
     "zanhu.articles.apps.ArticlesConfig",
     "zanhu.qa.apps.QaConfig",
     "zanhu.messager.apps.MessagerConfig",
+    "zanhu.notifications.apps.NotificationsConfig",
+    "zanhu.search.apps.SearchConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

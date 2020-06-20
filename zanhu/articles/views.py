@@ -4,8 +4,10 @@ from django.views.generic import CreateView, ListView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django_comments.signals import comment_was_posted
 
-from articles.forms import ArticleForm
+from zanhu.articles.forms import ArticleForm
+from zanhu.notifications.views import notification_handler
 from zanhu.articles.models import Article
 from zanhu.helpers import AuthorRequiredMixin
 
@@ -72,3 +74,13 @@ class EditArticleView(LoginRequiredMixin, AuthorRequiredMixin, UpdateView):
     def get_success_url(self):
         messages.success(self.request, self.message)
         return reverse_lazy('articles:list')
+
+def notify_comment(**kwargs):
+    """文章有评论时通知作者"""
+    actor = kwargs['request'].user
+    obj = kwargs['comment'].content_object
+
+    notification_handler(actor, obj.user, 'C', obj)
+
+
+comment_was_posted.connect(receiver=notify_comment)

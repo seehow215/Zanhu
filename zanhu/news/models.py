@@ -1,10 +1,14 @@
 from __future__ import unicode_literals
 import uuid
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from six import python_2_unicode_compatible
+
+from zanhu.notifications.views import notification_handler
 
 
 @python_2_unicode_compatible
@@ -28,12 +32,26 @@ class News(models.Model):
     def __str__(self):
         return self.content
 
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(News, self).save()
+        if not self.reply:
+            channel_layer = get_channel_layer()
+            payload = {
+                'type': 'receive',
+                'key': 'additional_news',
+                'actor_name': self.user.username,
+            }
+            async_to_sync(channel_layer.group_send)('notifications', payload)
+
     def switch_like(self, user):
-        """like or dislike"""
-        if user in self.liked.all():
+        """点赞或取消赞"""
+        if user in self.liked.all():  # 如果用户已经赞过，则取消赞
             self.liked.remove(user)
-        else:
+        else:  # 如果用户没有赞过，则添加赞
             self.liked.add(user)
+            # 通知楼主
+            notification_handler(user, self.user, 'L', self, id_value=str(self.uuid_id), key='social_update')
 
     def get_parent(self):
         if self.parent:
@@ -55,6 +73,8 @@ class News(models.Model):
             reply=True,
             parent=parent
         )
+        # 通知楼主
+        notification_handler(user, parent.user, 'R', parent, id_value=str(parent.uuid_id), key='social_update')
 
     def get_thread(self):
         """return all threads related to the current thread"""

@@ -9,6 +9,7 @@ from django.views.generic import CreateView, ListView, DetailView
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
+from zanhu.notifications.views import notification_handler
 from zanhu.helpers import ajax_required
 from zanhu.qa.models import Question, Answer
 from zanhu.qa.forms import QuestionForm
@@ -166,4 +167,6 @@ def accept_answer(request):
     if answer.question.user.username != request.user.username:
         raise PermissionDenied
     answer.accept_answer()
+    # 通知回答者
+    notification_handler(request.user, answer.user, 'W', answer)
     return JsonResponse({'status': 'true'}, status=200)

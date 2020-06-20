@@ -4,6 +4,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
 
 from zanhu.messager.consumers import MessagesConsumer
+from zanhu.notifications.consumers import NotificationsConsumer
 
 # self.scope['type']获取协议类型
 # self.scope['url_route']['kwargs']['username']获取url中关键字参数
@@ -13,6 +14,7 @@ application = ProtocolTypeRouter({
     'websocket': AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter([
+                path('ws/notifications/', MessagesConsumer),
                 path('ws/<str:username>/', MessagesConsumer),
             ])
         )
