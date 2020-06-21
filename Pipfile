@@ -15,6 +15,7 @@ channels = "*"
 django-haystack = "*"
 elasticsearch = "==2.4.1"
 django-celery-email = "*"
+tornado = "*"
 
 [requires]
 python_version = "3.6"

@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="74472658-554d-4ab8-86b3-ffef90daafd3" name="zanhu" url="http://34.87.131.11">
-        <fileTransfer rootFolder="/home/b13036069" accessType="SFTP" host="34.87.131.11" port="22" sshConfigId="1f8f053a-3420-49f5-8a4d-2a315a34163c" sshConfig="b13036069@34.87.131.11:22 agent" authAgent="true">
+        <fileTransfer rootFolder="/home/b13036069" accessType="SFTP" host="34.87.131.11" port="22" sshConfigId="48f7a910-0990-448e-81da-48bc62a19807" sshConfig="b13036069@34.87.131.11:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" keepAliveTimeout="10000" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

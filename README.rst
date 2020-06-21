@@ -11,17 +11,15 @@ A Q&A website
      :alt: Black code style
 
 
-Settings
+Intro
 --------
 
-Moved to settings_.
+Zanhu is an enterprise level Q&A website, similar to Quora and Stackoverflow. Starting from actual need analysis, this project implements the prevailing functions of Q&A website, including news, articles, q&a, messages, notifications, searching and personal center.
 
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
-
-Basic Commands
+Project Management
 --------------
 
-Setting Up Your Users
+Needs Analysis
 ^^^^^^^^^^^^^^^^^^^^^
 
 * To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
